@@ -1,0 +1,28 @@
+//minHeap class
+public class Heap
+{
+    private HuffTree[] heap;
+    private int size;
+
+    Heap(HuffTree[] input)
+    {
+        HuffTree[] heap = input;
+    }
+
+    public HuffTree removeMin()
+    {
+        return null;
+    }
+
+    public void insert(HuffTree node)
+    {
+
+    }
+
+    //return size of heap
+    public int size()
+    {
+        return this.size;
+    }
+
+}
