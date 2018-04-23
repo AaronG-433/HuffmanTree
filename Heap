@@ -8,12 +8,13 @@ public class Heap
 
     Heap(int[] input)
     {
-        int[] array = input;        //array of frequencies matched with char values
         int count = 0;
-        while(count < array.length)     //run a loop to create an array of nodes
+        while(count < input.length)     //run a loop to create an array of nodes
         {
-            if(array[count] != 0)
-                heap.add(new HuffTree((char)count, array[count]));
+            if(input[count] != 0)
+            {
+                heap.add(new HuffTree((char)count, input[count]));
+            }
 
             count++;            //increment count
         }
@@ -38,29 +39,35 @@ public class Heap
                     tempLoc = count;
                 }
 
-                if (heap.get(count).root().weight() < min)      //if min is greater than curent weight, update min and temp
+                if (heap.get(count).root().weight() < min)      //if min is greater than new weight, update min and temp
                 {
                     min = heap.get(count).root().weight();
                     temp = heap.get(count);
                     tempLoc = count;
                 }
             }
+            count++;
         }
-        if(tempLoc != -1)
+        if(tempLoc != -1)       //if non-null value found in heap
             heap.set(tempLoc, null);       //set HuffTree in heap to null
 
         size+=-1;       //decrease size by 1
-        return temp;
+        return temp;        //return minimum HuffTree
     }
 
-    //insert a new node into the heap
+    //insert a new node into the heap at first null location
     public void insert(HuffTree tree)
     {
         int count=0;
         while(count < heap.size())
         {
-            if(heap.get(count) == null)
+            if(heap.get(count) == null)         //input new HuffTree at first null location in heap
+            {
                 heap.set(count, tree);
+                size+=1;        //increase size by 1
+                return;
+            }
+            count++;
         }
         size+=1;        //increase size by 1
     }
