@@ -8,7 +8,7 @@ class HuffNode{
 
     /** Constructors */
     HuffNode(HuffNode l, HuffNode r, int wt)            //for an internal node
-    { left=l; right=r; letter='0'; weight = wt; }
+    { left=l; right=r; weight = wt; }
     HuffNode(char let, int wt)                          //for a leaf node with a char value
     {left=null; right=null; letter=let; weight=wt;}
 
