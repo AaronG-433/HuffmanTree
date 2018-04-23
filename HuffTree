@@ -5,28 +5,23 @@ import java.io.IOException;
 
 public class HuffTree implements HuffmanCoding
 {
-    private HuffBaseNode root;
+    private HuffNode root;
 
     /** Constructors */
-//    HuffTree(char el, int wt)
-//    { root = new HuffLeafNode(el, wt); }
-    HuffTree(HuffBaseNode l, HuffBaseNode r, int wt)
+    HuffTree()          //default constructor
+    {root = null; }
+    HuffTree(char el, int wt)           //leaf constructor
+    { root = new HuffNode(el, wt); }
+    HuffTree(HuffNode l, HuffNode r, int wt)        //internal node constructor
     { root = new HuffNode(l, r, wt); }
 
     //returns root
-    HuffBaseNode root() { return root; }
+    HuffNode root()
+    { return root; }
 
     //returns weight
     public int weight() // Weight of tree is weight of root
     { return root.weight(); }
-
-    //compares two HuffTrees
-    public int compareTo(Object t) {
-        HuffTree that = (HuffTree)t;
-        if (root.weight() < that.weight()) return -1;
-        else if (root.weight() == that.weight()) return 0;
-        else return 1;
-    }
 
     //copy this from online source?
     //copy buildTree from online source?
@@ -89,7 +84,7 @@ public class HuffTree implements HuffmanCoding
     //print the characters and frequencies
     public String getFrequencies(File inputFile) throws FileNotFoundException
     {
-        FileInputStream fInputStream = new FileInputStream(inputFile);
+        FileInputStream fInputStream = new FileInputStream(inputFile);      //throws FileNotFoundException if not there
         int[] freqArr = createArray(inputFile);
         String charFreqTable = new String();
         for(int i=0; i<128; i++)
@@ -105,23 +100,25 @@ public class HuffTree implements HuffmanCoding
     //take a file as input and create a Huffman Tree
     public HuffTree buildTree(File inputFile) throws FileNotFoundException, Exception
     {
+        FileInputStream fInputStream = new FileInputStream(inputFile);      //throws FileNotFoundException if not there
         HuffTree tmp1, tmp2, tmp3 = null;
+        Heap tempHeap = new Heap(createArray(inputFile));           //create the heap based on the inputFile
 
-        while (Heap.size() > 1) { // While two or more items left
-            tmp1 = Heap.removeMin();
-            tmp2 = Heap.removeMin();
+        while (tempHeap.size() > 1) { // While two or more items left
+            tmp1 = tempHeap.removeMin();
+            tmp2 = tempHeap.removeMin();
             tmp3 = new HuffTree(tmp1.root(), tmp2.root(), tmp1.weight() + tmp2.weight());
-            Heap.insert(tmp3);   // Return new tree to heap
+            tempHeap.insert(tmp3);   // Return new tree to heap
         }
-        return tmp3;            // Return the tree
+        return tmp3;            // Return the completed HuffTree
     }
 
     //take a file and a HuffTree and encode the file.
     //output a string of 1's and 0's representing the file
-//    public String encodeFile(File inputFile, HuffTree huffTree) throws FileNotFoundException
-//    {
-//        return null;
-//    }
+    public String encodeFile(File inputFile, HuffTree huffTree) throws FileNotFoundException
+    {
+        return null;
+    }
 
     //take a String and HuffTree and output the decoded words
     public String decodeFile(String code, HuffTree huffTree) throws Exception
@@ -132,6 +129,7 @@ public class HuffTree implements HuffmanCoding
     //print the characters and their codes
     public String traverseHuffmanTree(HuffTree tree)
     {
+
         return null;
     }
 }
