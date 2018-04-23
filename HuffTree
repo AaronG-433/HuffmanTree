@@ -2,16 +2,21 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 public class HuffTree implements HuffmanCoding
 {
     private HuffNode root;
+    private HashMap<Character, String> map = new HashMap<>();
 
     /** Constructors */
     HuffTree()          //default constructor
     {root = null; }
-    HuffTree(char el, int wt)           //leaf constructor
-    { root = new HuffNode(el, wt); }
+
+    HuffTree(char let, int wt)           //leaf constructor
+    { root = new HuffNode(let, wt); }
+
     HuffTree(HuffNode l, HuffNode r, int wt)        //internal node constructor
     { root = new HuffNode(l, r, wt); }
 
@@ -22,6 +27,10 @@ public class HuffTree implements HuffmanCoding
     //returns weight
     public int weight() // Weight of tree is weight of root
     { return root.weight(); }
+
+    //returns letter
+    public char letter()
+    { return root.letter(); }
 
     //copy this from online source?
     //copy buildTree from online source?
@@ -69,7 +78,7 @@ public class HuffTree implements HuffmanCoding
             while (reader.available() > 0)          //read every character in the file
             {
                 current = (char) reader.read();
-                if(current != 10)
+                if(current != 10 && current !=13)       //ignore new line and carriage returns
                     arr[current]+= 1;
             }
         }
@@ -100,11 +109,12 @@ public class HuffTree implements HuffmanCoding
     //take a file as input and create a Huffman Tree
     public HuffTree buildTree(File inputFile) throws FileNotFoundException, Exception
     {
-        FileInputStream fInputStream = new FileInputStream(inputFile);      //throws FileNotFoundException if not there
+        FileInputStream fInputStream = new FileInputStream(inputFile);      //throws some exception if file not there
         HuffTree tmp1, tmp2, tmp3 = null;
         Heap tempHeap = new Heap(createArray(inputFile));           //create the heap based on the inputFile
 
-        while (tempHeap.size() > 1) { // While two or more items left
+        while (tempHeap.size() > 1)         // While two or more items left
+        {
             tmp1 = tempHeap.removeMin();
             tmp2 = tempHeap.removeMin();
             tmp3 = new HuffTree(tmp1.root(), tmp2.root(), tmp1.weight() + tmp2.weight());
@@ -129,7 +139,34 @@ public class HuffTree implements HuffmanCoding
     //print the characters and their codes
     public String traverseHuffmanTree(HuffTree tree)
     {
+        if(tree.root == null)       //null root check
+            return null;
 
-        return null;
+        String output = "";
+
+        if(tree.root.left() != null)        //check if there is a left child of the parent
+            traverseNode(tree.root.left(), "0");
+
+        if(tree.root.right() != null)           //check if there is a right child of the parent
+            traverseNode(tree.root.right(), "1");
+
+        System.out.println(map);
+        return output;
+    }
+
+    //takes in a node and traverses through all of its children
+    private void traverseNode (HuffNode node, String output)
+    {
+        if( (node.left() == null) && (node.right() == null) )       //if children are null then add left to hashmap
+        {
+            map.put(node.letter(), output);
+            return;
+        }
+
+        if(node.left() != null)                     //check left child node
+            traverseNode(node.left(), output+"0");
+
+        if(node.right() != null)                    //check right child node
+            traverseNode(node.right(), output+"1");
     }
 }
