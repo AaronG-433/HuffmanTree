@@ -1,22 +1,68 @@
+import java.util.ArrayList;
+
 //minHeap class
 public class Heap
 {
-    private HuffTree[] heap;
+    private ArrayList<HuffTree> heap = new ArrayList<>();
     private int size;
 
-    Heap(HuffTree[] input)
+    Heap(int[] input)
     {
-        HuffTree[] heap = input;
+        int[] array = input;        //array of frequencies matched with char values
+        int count = 0;
+        while(count < array.length)     //run a loop to create an array of nodes
+        {
+            if(array[count] != 0)
+                heap.add(new HuffTree((char)count, array[count]));
+
+            count++;            //increment count
+        }
+        size=heap.size();         //set heap size after heap is made
     }
 
+    //remove the minimum value in the heap
     public HuffTree removeMin()
     {
-        return null;
+        int min=0;
+        HuffTree temp = null;
+        int count=0;
+        int tempLoc=-1;
+        while(count < heap.size())
+        {
+            if(heap.get(count) != null)     //check if heap value is null
+            {
+                if(min == 0)
+                {
+                    min = heap.get(count).root().weight();      //set min to weight of first non-null node
+                    temp = heap.get(count);
+                    tempLoc = count;
+                }
+
+                if (heap.get(count).root().weight() < min)      //if min is greater than curent weight, update min and temp
+                {
+                    min = heap.get(count).root().weight();
+                    temp = heap.get(count);
+                    tempLoc = count;
+                }
+            }
+        }
+        if(tempLoc != -1)
+            heap.set(tempLoc, null);       //set HuffTree in heap to null
+
+        size+=-1;       //decrease size by 1
+        return temp;
     }
 
-    public void insert(HuffTree node)
+    //insert a new node into the heap
+    public void insert(HuffTree tree)
     {
-
+        int count=0;
+        while(count < heap.size())
+        {
+            if(heap.get(count) == null)
+                heap.set(count, tree);
+        }
+        size+=1;        //increase size by 1
     }
 
     //return size of heap
