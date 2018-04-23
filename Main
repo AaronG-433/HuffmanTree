@@ -3,10 +3,16 @@ import java.io.FileNotFoundException;
 
 public class Main
 {
-    public static void main (String args[]) throws FileNotFoundException
+    public static void main (String args[]) throws FileNotFoundException, Exception
     {
         HuffmanCoding tree = new HuffTree();
+        HuffmanCoding temp = new HuffTree();
+
         File inputFile = new File("illiad.txt");
         System.out.println(tree.getFrequencies(inputFile));
+
+        temp = tree.buildTree(inputFile);
+
+
     }
 }
