@@ -1,0 +1,26 @@
+
+/** Huffman tree node */
+class HuffNode{
+    private int weight;
+    private char letter;
+    private HuffNode left;
+    private HuffNode right;
+
+    /** Constructors */
+    HuffNode(HuffNode l, HuffNode r, int wt)            //for an internal node
+    { left=l; right=r; letter='0'; weight = wt; }
+    HuffNode(char let, int wt)                          //for a leaf node with a char value
+    {left=null; right=null; letter=let; weight=wt;}
+
+    /** @return The left child */
+    HuffNode left() { return left; }
+
+    /** @return The right child */
+    HuffNode right() { return right; }
+
+    /** @return The letter value */
+    char letter() { return letter; }
+
+    /** @return The weight */
+    public int weight() { return weight; }
+}
