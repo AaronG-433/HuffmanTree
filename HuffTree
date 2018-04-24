@@ -6,6 +6,11 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
+/*
+    Author: Aaron Gaskin
+    Date:4/24/18
+    Section: 1079
+ */
 public class HuffTree implements HuffmanCoding
 {
     private HuffNode root;
@@ -132,9 +137,8 @@ public class HuffTree implements HuffmanCoding
     public String encodeFile(File inputFile, HuffTree huffTree) throws FileNotFoundException
     {
         String output = "";
-        System.out.println("In encode\n"+huffTree.traverseHuffmanTree(huffTree));        //create a hashmap for inputted huffTree
+        huffTree.traverseHuffmanTree(huffTree);
         HashMap treeMap = huffTree.getMap();
-        System.out.println("TreeMap is\n"+treeMap);
         try
         {
             FileInputStream reader = new FileInputStream(inputFile);
