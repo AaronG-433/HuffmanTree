@@ -12,7 +12,6 @@ public class Main
         System.out.println(tree.getFrequencies(inputFile));
 
         temp = tree.buildTree(inputFile);
-
-
+        System.out.println(tree.traverseHuffmanTree(tree.buildTree(inputFile)));
     }
 }
