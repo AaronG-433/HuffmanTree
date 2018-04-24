@@ -145,7 +145,6 @@ public class HuffTree implements HuffmanCoding
                 if(current != 10 && current !=13)       //ignore new line and carriage returns
                 {
                     output += treeMap.get(current);
-                    System.out.println("Map is "+treeMap.get(current));
                 }
             }
         }
@@ -159,7 +158,26 @@ public class HuffTree implements HuffmanCoding
     //take a String and HuffTree and output the decoded words
     public String decodeFile(String code, HuffTree huffTree) throws Exception
     {
-        return null;
+        String output="";
+        int count=0;
+        HuffNode temp = huffTree.getRoot();
+        while(count < code.length())               //run until we reach the end of the encoded String
+        {
+            if (temp.left() != null || temp.right() != null)         //check if internal node, if so go to next child based on encoded string
+            {
+                if (code.charAt(count) == '0')
+                    temp = temp.left();
+                else if (code.charAt(count) == '1')
+                    temp = temp.right();
+            }
+            if (temp.left() == null || temp.right() == null)        //check if lead node, if so add char to output
+            {
+                output += temp.letter();
+                temp = huffTree.getRoot();
+            }
+            count++;
+        }
+        return output;
     }
 
     //print the characters and their codes
