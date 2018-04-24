@@ -22,16 +22,19 @@ public class HuffTree implements HuffmanCoding
     { root = new HuffNode(l, r, wt); }
 
     //returns root
-    HuffNode root()
+    HuffNode getRoot()
     { return root; }
 
     //returns weight
-    public int weight() // Weight of tree is weight of root
+    public int getWeight() // Weight of tree is weight of root
     { return root.weight(); }
 
     //returns letter
-    public char letter()
+    public char getLetter()
     { return root.letter(); }
+
+    public HashMap getMap()
+    { return map; }
 
     //copy this from online source?
     //copy buildTree from online source?
@@ -118,7 +121,7 @@ public class HuffTree implements HuffmanCoding
         {
             tmp1 = tempHeap.removeMin();
             tmp2 = tempHeap.removeMin();
-            tmp3 = new HuffTree(tmp1.root(), tmp2.root(), tmp1.weight() + tmp2.weight());
+            tmp3 = new HuffTree(tmp1.getRoot(), tmp2.getRoot(), tmp1.getWeight() + tmp2.getWeight());
             tempHeap.insert(tmp3);   // Return new tree to heap
         }
         return tmp3;            // Return the completed HuffTree
@@ -128,7 +131,29 @@ public class HuffTree implements HuffmanCoding
     //output a string of 1's and 0's representing the file
     public String encodeFile(File inputFile, HuffTree huffTree) throws FileNotFoundException
     {
-        return null;
+        String output = "";
+        System.out.println("In encode\n"+huffTree.traverseHuffmanTree(huffTree));        //create a hashmap for inputted huffTree
+        HashMap treeMap = huffTree.getMap();
+        System.out.println("TreeMap is\n"+treeMap);
+        try
+        {
+            FileInputStream reader = new FileInputStream(inputFile);
+            char current;
+            while (reader.available() > 0)          //read every character in the file
+            {
+                current = (char) reader.read();
+                if(current != 10 && current !=13)       //ignore new line and carriage returns
+                {
+                    output += treeMap.get(current);
+                    System.out.println("Map is "+treeMap.get(current));
+                }
+            }
+        }
+        catch (IOException e)         //catch normal Exception due to way file is read
+        {
+            e.printStackTrace();
+        }
+        return output;
     }
 
     //take a String and HuffTree and output the decoded words
@@ -151,14 +176,11 @@ public class HuffTree implements HuffmanCoding
         if(tree.root.right() != null)           //check if there is a right child of the parent
             traverseNode(tree.root.right(), "1");
 
-        System.out.println(map);
-
         //map output taken from https://stackoverflow.com/questions/1066589/iterate-through-a-hashmap
         Iterator it = map.entrySet().iterator();
         while (it.hasNext()) {
             Map.Entry pair = (Map.Entry)it.next();
             output += pair.getKey()+"  "+pair.getValue()+"\n";
-            it.remove(); // avoids a ConcurrentModificationException
         }
         return output;
     }
