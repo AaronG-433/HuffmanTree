@@ -1,4 +1,9 @@
 import java.util.ArrayList;
+/*
+    Author: Aaron Gaskin
+    Date:4/24/18
+    Section: 1079
+ */
 
 //minHeap class
 public class Heap
@@ -34,14 +39,100 @@ public class Heap
             {
                 if(min == 0)
                 {
-                    min = heap.get(count).root().weight();      //set min to weight of first non-null node
+                    min = heap.get(count).getRoot().weight();      //set min to weight of first non-null node
                     temp = heap.get(count);
                     tempLoc = count;
                 }
 
-                if (heap.get(count).root().weight() < min)      //if min is greater than new weight, update min and temp
+                if (heap.get(count).getRoot().weight() < min)      //if min is greater than new weight, update min and temp
                 {
-                    min = heap.get(count).root().weight();
+                    min = heap.get(count).getRoot().weight();
+                    temp = heap.get(count);
+                    tempLoc = count;
+                }
+            }
+            count++;
+        }
+        if(tempLoc != -1)       //if non-null value found in heap
+            heap.set(tempLoc, null);       //set HuffTree in heap to null
+
+        size+=-1;       //decrease size by 1
+        return temp;        //return minimum HuffTree
+    }
+
+    //insert a new node into the heap at first null location
+    public void insert(HuffTree tree)
+    {
+        int count=0;
+        while(count < heap.size())
+        {
+            if(heap.get(count) == null)         //input new HuffTree at first null location in heap
+            {
+                heap.set(count, tree);
+                size+=1;        //increase size by 1
+                return;
+            }
+            count++;
+        }
+        size+=1;        //increase size by 1
+    }
+
+    //return size of heap
+    public int size()
+    {
+        return this.size;
+    }
+
+}
+import java.util.ArrayList;
+/*
+    Author: Aaron Gaskin
+    Date:4/24/18
+    Section: 1079
+ */
+
+//minHeap class
+public class Heap
+{
+    private ArrayList<HuffTree> heap = new ArrayList<>();
+    private int size;
+
+    Heap(int[] input)
+    {
+        int count = 0;
+        while(count < input.length)     //run a loop to create an array of nodes
+        {
+            if(input[count] != 0)
+            {
+                heap.add(new HuffTree((char)count, input[count]));
+            }
+
+            count++;            //increment count
+        }
+        size=heap.size();         //set heap size after heap is made
+    }
+
+    //remove the minimum value in the heap
+    public HuffTree removeMin()
+    {
+        int min=0;
+        HuffTree temp = null;
+        int count=0;
+        int tempLoc=-1;
+        while(count < heap.size())
+        {
+            if(heap.get(count) != null)     //check if heap value is null
+            {
+                if(min == 0)
+                {
+                    min = heap.get(count).getRoot().weight();      //set min to weight of first non-null node
+                    temp = heap.get(count);
+                    tempLoc = count;
+                }
+
+                if (heap.get(count).getRoot().weight() < min)      //if min is greater than new weight, update min and temp
+                {
+                    min = heap.get(count).getRoot().weight();
                     temp = heap.get(count);
                     tempLoc = count;
                 }
