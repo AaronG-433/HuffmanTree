@@ -8,10 +8,21 @@ public class Main
         HuffmanCoding tree = new HuffTree();
         HuffmanCoding temp = new HuffTree();
 
-        File inputFile = new File("illiad.txt");
+        //getFrequencies test
+        File inputFile = new File("test.txt");
         System.out.println(tree.getFrequencies(inputFile));
 
+
+        //buildTree test
         temp = tree.buildTree(inputFile);
-        System.out.println(tree.traverseHuffmanTree(tree.buildTree(inputFile)));
+        System.out.println("Output temp traverse\n"+temp.traverseHuffmanTree(tree.buildTree(inputFile)));
+
+        //encode test
+        String output = temp.encodeFile(inputFile, tree.buildTree(inputFile));
+        System.out.println(output);
+
+        //decode test
+        String test = temp.decodeFile(output, tree.buildTree(inputFile));
+        System.out.println(test);
     }
 }
