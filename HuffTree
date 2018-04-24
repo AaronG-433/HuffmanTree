@@ -3,6 +3,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
 public class HuffTree implements HuffmanCoding
@@ -151,6 +152,14 @@ public class HuffTree implements HuffmanCoding
             traverseNode(tree.root.right(), "1");
 
         System.out.println(map);
+
+        //map output taken from https://stackoverflow.com/questions/1066589/iterate-through-a-hashmap
+        Iterator it = map.entrySet().iterator();
+        while (it.hasNext()) {
+            Map.Entry pair = (Map.Entry)it.next();
+            output += pair.getKey()+"  "+pair.getValue()+"\n";
+            it.remove(); // avoids a ConcurrentModificationException
+        }
         return output;
     }
 
