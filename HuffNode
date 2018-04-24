@@ -1,4 +1,8 @@
-
+/*
+    Author: Aaron Gaskin
+    Date:4/24/18
+    Section: 1079
+ */
 /** Huffman tree node */
 class HuffNode{
     private int weight;
