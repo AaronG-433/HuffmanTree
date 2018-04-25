@@ -5,24 +5,24 @@ public class Main
 {
     public static void main (String args[]) throws FileNotFoundException, Exception
     {
-        HuffmanCoding tree = new HuffTree();
-        HuffmanCoding temp = new HuffTree();
+        HuffTree tree = new HuffTree();
+        HuffmanCoding temp = new HuffmanEncoder();
 
         //getFrequencies test
         File inputFile = new File("test.txt");
-        System.out.println(tree.getFrequencies(inputFile));
+        System.out.println(temp.getFrequencies(inputFile));
 
 
         //buildTree test
-        temp = tree.buildTree(inputFile);
-        System.out.println("Output temp traverse\n"+temp.traverseHuffmanTree(tree.buildTree(inputFile)));
+        tree = temp.buildTree(inputFile);
+        System.out.println("Output temp traverse\n"+temp.traverseHuffmanTree(tree));
 
         //encode test
-        String output = temp.encodeFile(inputFile, tree.buildTree(inputFile));
+        String output = temp.encodeFile(inputFile, tree);
         System.out.println(output);
 
         //decode test
-        String test = temp.decodeFile(output, tree.buildTree(inputFile));
+        String test = temp.decodeFile(output, tree);
         System.out.println(test);
     }
 }
