@@ -79,6 +79,11 @@ public class HuffmanEncoder implements HuffmanCoding
     //output a string of 1's and 0's representing the file
     public String encodeFile(File inputFile, HuffTree huffTree) throws FileNotFoundException
     {
+        if(huffTree == null)            //null tree check
+            return null;
+        if(huffTree.getRoot() == null)  //null root check
+            return null;
+
         String output = "";
         traverseHuffmanTree(huffTree);         //run traverse to create the tree hashmap
         HashMap treeMap = huffTree.getMap();
@@ -105,6 +110,11 @@ public class HuffmanEncoder implements HuffmanCoding
     //take a String and HuffTree and output the decoded words
     public String decodeFile(String code, HuffTree huffTree) throws Exception
     {
+        if(huffTree == null)            //null tree check
+            return null;
+        if(huffTree.getRoot() == null)  //null root check
+            return null;
+
         String output="";
         int count=0;
         HuffNode temp = huffTree.getRoot();
@@ -130,6 +140,8 @@ public class HuffmanEncoder implements HuffmanCoding
     //print the characters and their codes
     public String traverseHuffmanTree(HuffTree tree)
     {
+        if(tree == null)                //null tree check
+            return null;
         if(tree.getRoot() == null)       //null root check
             return null;
 
